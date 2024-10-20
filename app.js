@@ -40,7 +40,7 @@ app.get('/getjokes',async(req,res)=>{
 
 app.get('/joke',async(req,res)=>{
     const {category, jokeType, count}=req.query;
-    let getDBQuery=`SELECT id, setup, delivery from jokes where category='${category}'`;
+    let getDBQuery=`SELECT id, setup, delivery from jokes where category='${category}%'`;
     if(jokeType==='nsfw'){
         getDBQuery+=` and nsfw=1 LIMIT ?;`;
     }
