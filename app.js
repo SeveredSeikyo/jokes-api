@@ -65,6 +65,6 @@ app.get('/joke',async(req,res)=>{
     if(jokeType===''){
         getDBQuery+=` and LIMIT ?;`;
     }
-    const jokes=await db.all(getDBQuery,[Number(count)||0]);
+    const jokes=await db.all(getDBQuery,[Number(count)]);
     res.send(jokes);
 });
