@@ -37,3 +37,34 @@ app.get('/getjokes',async(req,res)=>{
     const jokes=await getJokes();
     res.send(jokes);
 })
+
+app.get('/joke',async(req,res)=>{
+    const {category, jokeType, count}=req.query;
+    let getDBQuery=`SELECT id, setup, delivery from jokes where category='${category}'`;
+    if(jokeType==='nsfw'){
+        getDBQuery+=` and nsfw=1 LIMIT ?;`;
+    }
+    if(jokeType==='sexist'){
+        getDBQuery+=` and sexist=1 LIMIT ?;`;
+    }
+    if(jokeType==='political'){
+        getDBQuery+=` and political=1 LIMIT ?;`;
+    }
+    if(jokeType==='racist'){
+        getDBQuery+=` and racist=1 LIMIT ?;`;
+    }
+    if(jokeType==='explicit'){
+        getDBQuery+=` and explicit=1 LIMIT ?;`;
+    }
+    if(jokeType==='religious'){
+        getDBQuery+=` and religious=1 LIMIT ?;`;
+    }
+    if(jokeType==='safe'){
+        getDBQuery+=` and safe=1 LIMIT ?;`;
+    }
+    if(jokeType===''){
+        getDBQuery+=` and LIMIT ?;`;
+    }
+    const jokes=await db.all(getDBQuery,[Number(count)||0]);
+    res.send(jokes);
+});
